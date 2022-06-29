@@ -21,10 +21,17 @@ namespace LiteratureWritten.Pages
     /// </summary>
     public partial class NewEditionPage : Page
     {
-        public NewEditionPage()
+        public static Classes.User User;
+        public NewEditionPage(Classes.User user)
         {
+            User = user;
             InitializeComponent();
-            Refresh();
+            if (User.Role == 1)
+            {
+                Refresh();
+                CBType.ItemsSource = Model.BDConnection.bd.EditionType.ToList();
+            }
+           
         }
 
         private void price(object sender, TextCompositionEventArgs e)
@@ -40,9 +47,9 @@ namespace LiteratureWritten.Pages
         private void BtnWindraw_Click(object sender, RoutedEventArgs e)
         {
             var select = ListEdition.SelectedItem as Model.Editions;
-            select.Status = true;
+            select.Status = false;
             Model.BDConnection.bd.SaveChanges();
-            MessageBox.Show("active");
+            MessageBox.Show("deactive active");
             Refresh();
         }
 
@@ -57,7 +64,62 @@ namespace LiteratureWritten.Pages
 
         private void BtnAddEdition_Click(object sender, RoutedEventArgs e)
         {
-            Model.Editions editions = new Model.Editions();
+            try
+            {
+                if (User.Role == 1)
+                {
+                    if (string.IsNullOrWhiteSpace(txtName.Text) && string.IsNullOrEmpty(txtPrice.Text))
+                    {
+                        MessageBox.Show("incorrect");
+                        return;
+                    }
+                    var select = CBType.SelectedItem as Model.EditionType;
+                    Model.Editions SearcEditions = Model.BDConnection.bd.Editions.FirstOrDefault(ed => ed.Name == txtName.Text);
+                    if (SearcEditions == null)
+                    {
+                        Model.Editions editions = new Model.Editions
+                        {
+                            Price = txtPrice.Text,
+                            Status = true,
+                            EditionType = select.ID,
+                            Name = txtName.Text
+                        };
+                        Model.BDConnection.bd.Editions.Add(editions);
+                        Model.BDConnection.bd.SaveChanges();
+                        MessageBox.Show("add");
+                        Refresh();
+                    }
+                    else
+                    {
+                        MessageBox.Show("incorrect");
+                        return;
+                    }
+                }
+               
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("incorrect");
+                return;
+            }
+            
+        }
+
+        private void back_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.Navigate(new Pages.SubscribedPage(User));
+        }
+        int count = 0;
+        private void BtnShow_Click(object sender, RoutedEventArgs e)
+        {
+
+            ListEdition.ItemsSource = Model.BDConnection.bd.Editions.ToList();
+
+        }
+
+        private void BtnShowFalse_Click(object sender, RoutedEventArgs e)
+        {
+            ListEdition.ItemsSource = Model.BDConnection.bd.Editions.Where(u => u.Status == false).ToList();
         }
     }
 }

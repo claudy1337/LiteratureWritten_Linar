@@ -101,7 +101,7 @@ namespace LiteratureWritten.Pages
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            NavigationService.Navigate(new Pages.NewEditionPage(User));
         }
     }
 }
