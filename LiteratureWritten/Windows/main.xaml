@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         FontFamily="Poppins"
         WindowStartupLocation="CenterScreen"
-        Title="main" Height="490" Width="820">
+        Title="main" Height="490" Width="910">
     <Grid>
         <Frame x:Name="PagesNavigation" NavigationUIVisibility="Hidden">
         </Frame>

@@ -25,15 +25,15 @@ namespace LiteratureWritten.Pages
         {
             User = user;
             InitializeComponent();
-            CBSearch.ItemsSource = Model.BDConnection.bd.EditionType.ToList();
             if (User.Role == 2)
             {
-                ListEdition.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u => u.UserID == User.Id && u.Editions.Status == true).ToList();
+                ListEdition.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u => u.UserID == User.Id && u.Editions.Status == true && u.Status == true).ToList();
                 txtUserEdit.Visibility = Visibility.Hidden;
+                txtNewEdition.Visibility = Visibility.Hidden;
             }
             else
             {
-                ListEdition.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u=>u.Editions.Status == true).ToList();
+                ListEdition.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u=>u.Editions.Status == true && u.Status == true).ToList();
             }
 
             
@@ -74,36 +74,9 @@ namespace LiteratureWritten.Pages
             NavigationService.Navigate(new Pages.AddEditionsPage(User));
         }
 
-        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Refresh();
-            if (User.Role == 2)
-            {
-                
-                ListEdition.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u => u.UserID == User.Id && u.Editions.Name == txtSearch.Text && u.Editions.Status == true).ToList();
-            }
-            else
-            {
-                ListEdition.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u=> u.Users.Login == txtSearch.Text || u.Editions.Name == txtSearch.Text).ToList();
-            }
-        }
+        
 
-        private void CBSearch_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Refresh();
-            var select = CBSearch.SelectedItem as Model.EditionType;
-            if (User.Role == 2)
-            {
-                ListEdition.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u => u.UserID == User.Id && u.Editions.EditionType1.ID == select.ID && u.Editions.Status == true).ToList();
-                txtUserEdit.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                
-                ListEdition.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u=>u.Editions.EditionType1.ID == select.ID && u.Editions.Status == true).ToList();
-            }
-        }
-
+       
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             
@@ -119,6 +92,16 @@ namespace LiteratureWritten.Pages
                 NavigationService.Navigate(new EditEditionPage(edition));
             }
             
+        }
+
+        private void BtnDeactive_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Pages.HistoryDeactiveEditionPage(User));
+        }
+
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

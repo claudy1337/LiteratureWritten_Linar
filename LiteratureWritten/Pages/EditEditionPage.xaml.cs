@@ -38,50 +38,42 @@ namespace LiteratureWritten.Pages
         {
             try
             {
-                if (CBDeactive.IsChecked == true)
+                var selectDelivery = CBDelivery.SelectedItem as Model.DeliveryMethod;
+                var selectPeriod = CBPeriod.SelectedItem as Model.SubscriptionTerm;
+                Model.SubscribedEditions subscribed = Model.BDConnection.bd.SubscribedEditions.FirstOrDefault(s => s.UserID == Edition.User.Id && s.ID == Edition.Id);
+                if (CBDeactive.IsChecked == true && subscribed != null)
                 {
-
+                    subscribed.Status = false;
+                    Model.BDConnection.bd.SaveChanges();
+                    MessageBox.Show("edit");
                 }
                 else
                 {
-                    var selectDelivery = CBDelivery.SelectedItem as Model.DeliveryMethod;
-                    var selectPeriod = CBPeriod.SelectedItem as Model.SubscriptionTerm;
-                    if (string.IsNullOrWhiteSpace(CBPeriod.Text) && string.IsNullOrWhiteSpace(CBDelivery.Text))
+
+                    if (subscribed != null)
+                    {
+                        if (CBPeriod.SelectedItem == null)
+                        {
+                            subscribed.DeliveryMethod = selectDelivery.ID;
+                        }
+                        else if (CBDelivery.SelectedItem == null)
+                        {
+                            subscribed.SubscriptionTerm = selectPeriod.ID;
+                        }
+                        else if (CBPeriod != null && CBDelivery.SelectedItem != null)
+                        {
+                            subscribed.DeliveryMethod = selectDelivery.ID;
+                            subscribed.SubscriptionTerm = selectPeriod.ID;
+                        }
+                        Model.BDConnection.bd.SaveChanges();
+                        MessageBox.Show("edit");
+                    }
+                    else
                     {
                         MessageBox.Show("incorrect");
                         return;
                     }
-                    else
-                    {
-                        Model.SubscribedEditions subscribed = Model.BDConnection.bd.SubscribedEditions.FirstOrDefault(s => s.UserID == Edition.User.Id && s.ID == Edition.Id);
-                        if (subscribed != null)
-                        {
-                            if (CBPeriod.SelectedItem == null)
-                            {
-                                subscribed.DeliveryMethod = selectDelivery.ID;
-                            }
-                            else if (CBDelivery.SelectedItem == null)
-                            {
-                                subscribed.SubscriptionTerm = selectPeriod.ID;
-                            }
-                            else if (CBPeriod != null && CBDelivery.SelectedItem != null)
-                            {
-                                subscribed.DeliveryMethod = selectDelivery.ID;
-                                subscribed.SubscriptionTerm = selectPeriod.ID;
-                            }
-
-
-                            Model.BDConnection.bd.SaveChanges();
-                            MessageBox.Show("edit");
-                        }
-                        else
-                        {
-                            MessageBox.Show("incorrect");
-                            return;
-                        }
-                    }
                 }
-                
             }
             catch(Exception)
             {

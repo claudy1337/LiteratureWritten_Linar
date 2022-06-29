@@ -8,7 +8,7 @@
       FontFamily="Poppins"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EditEditionPage"
-      Background="White">
+      Background="{DynamicResource PrimaryBackgroundColor}">
 
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
