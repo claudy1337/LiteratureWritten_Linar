@@ -47,7 +47,7 @@
            
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                 <Button Height="40" Content="Add New" Width="100" x:Name="BtnAddEdit" Click="BtnAddEdit_Click"/>
-                <Button Height="40" Content="Show Deactive" x:Name="BtnDeactive" Click="BtnDeactive_Click"  Width="100" Margin="10,0,0,0"  />
+                <Button Height="40" Content="Deactive" x:Name="BtnDeactive" Click="BtnDeactive_Click"  Width="100" Margin="10,0,0,0" Cursor="Hand"  />
                 <Button Height="40" Content="Edit" x:Name="BtnEdit" Click="BtnEdit_Click"  Width="100" Margin="10,0,0,0"/>
                 <Button Height="40" Content="Exit" x:Name="BtnExit" Click="BtnExit_Click" Width="100" Margin="10,0,0,0"/>
                 

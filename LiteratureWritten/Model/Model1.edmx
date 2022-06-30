@@ -56,7 +56,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Date" Type="date" />
+          <Property Name="Date" Type="datetime" />
           <Property Name="Edition" Type="int" />
           <Property Name="SubscriptionTerm" Type="int" />
           <Property Name="DeliveryMethod" Type="int" />
@@ -293,7 +293,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="Edition" Type="Int32" />
           <Property Name="SubscriptionTerm" Type="Int32" />
           <Property Name="DeliveryMethod" Type="Int32" />

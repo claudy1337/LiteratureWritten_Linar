@@ -33,7 +33,7 @@ namespace LiteratureWritten.Pages
         {
             if (User.Role == 1)
             {
-                DGHistory.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u => u.Status == false && u.Editions.Name == txtSearch.Text).ToList();
+                DGHistory.ItemsSource = Model.BDConnection.bd.SubscribedEditions.Where(u => u.Status == false && u.Editions.Name == txtSearch.Text || u.Status == false && u.Users.Login == txtSearch.Text || u.Status == false && u.Editions.Price == txtSearch.Text ).ToList();
             }
             else
             {

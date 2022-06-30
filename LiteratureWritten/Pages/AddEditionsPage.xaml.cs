@@ -55,9 +55,11 @@ namespace LiteratureWritten.Pages
                     Model.SubscribedEditions editions = Model.BDConnection.bd.SubscribedEditions.FirstOrDefault(u=>u.UserID == User.Id && u.Editions.ID == selectEdition.ID);
                     if (editions == null)
                     {
+                        var time = DateTime.Now.TimeOfDay;
                         Model.SubscribedEditions subscribed = new Model.SubscribedEditions
                         {
-                            Date = DateTime.Now,
+                            
+                            Date = DateTime.Now.Date + time,
                             Edition = selectEdition.ID,
                             SubscriptionTerm = selectTerm.ID,
                             DeliveryMethod = selectDelivery.ID,
@@ -69,7 +71,8 @@ namespace LiteratureWritten.Pages
                     }
                     else
                     {
-                        editions.Date = DateTime.Now;
+                        var time = DateTime.Now.TimeOfDay;
+                        editions.Date = DateTime.Now + time;
                         editions.DeliveryMethod = selectDelivery.ID;
                         editions.SubscriptionTerm = selectTerm.ID;
                         MessageBox.Show("re-recording");
