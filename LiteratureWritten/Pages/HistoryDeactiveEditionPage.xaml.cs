@@ -44,20 +44,38 @@ namespace LiteratureWritten.Pages
         private void BtnActive_Click(object sender, RoutedEventArgs e)
         {
             var select = DGHistory.SelectedItem as Model.SubscribedEditions;
-            select.Status = true;
-            Model.BDConnection.bd.SaveChanges();
-            MessageBox.Show("active");
-            Refresh();
+            if (select != null)
+            {
+                select.Status = true;
+                Model.BDConnection.bd.SaveChanges();
+                MessageBox.Show("active");
+                Refresh();
+            }
+            else
+            {
+                MessageBox.Show("select item");
+                return;
+            }
+            
             
         }
 
         private void BtnDeleted_Click(object sender, RoutedEventArgs e)
         {
             var select = DGHistory.SelectedItem as Model.SubscribedEditions;
-            Model.BDConnection.bd.SubscribedEditions.Remove((Model.SubscribedEditions)DGHistory.SelectedItem);
-            Model.BDConnection.bd.SaveChanges();
-            MessageBox.Show("deleted");
-            Refresh();
+            if (select != null)
+            {
+                Model.BDConnection.bd.SubscribedEditions.Remove((Model.SubscribedEditions)DGHistory.SelectedItem);
+                Model.BDConnection.bd.SaveChanges();
+                MessageBox.Show("deleted");
+                Refresh();
+            }
+            else
+            {
+                MessageBox.Show("select item");
+                return;
+            }
+            
         }
         public void Refresh()
         {
